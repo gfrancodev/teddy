@@ -1,6 +1,32 @@
 # 🧸 Teddy - Sistema de Gerenciamento de Clientes
 
 Sistema completo de gerenciamento de clientes desenvolvido com React (frontend) e NestJS (backend), seguindo as melhores práticas de arquitetura e desenvolvimento.
+### Requisitos para Execução
+
+Para executar toda a aplicação, você precisa ter os seguintes softwares instalados na sua máquina:
+
+- **Docker**: Ferramenta de contêinerização que permite criar, implantar e executar aplicações em contêineres.
+    - [Docker para Windows](https://docs.docker.com/desktop/install/windows-install/)
+    - [Docker para macOS](https://docs.docker.com/desktop/install/mac-install/)
+    - [Docker para Linux](https://docs.docker.com/desktop/install/linux-install/)
+
+- **Docker Compose**: Ferramenta para definir e gerenciar multi-contêineres Docker. A partir da versão 2.0, o comando `docker-compose` foi substituído por `docker compose`.
+    - [Docker Compose para Windows](https://docs.docker.com/compose/install/)
+    - [Docker Compose para macOS](https://docs.docker.com/compose/install/)
+    - [Docker Compose para Linux](https://docs.docker.com/compose/install/)
+
+- **Make** (opcional): Ferramenta de automação de build que pode simplificar a execução de múltiplos comandos Docker através de um arquivo `Makefile`.
+    - [Make para Windows](http://gnuwin32.sourceforge.net/packages/make.htm)
+    - [Make para macOS](https://formulae.brew.sh/formula/make)
+    - [Make para Linux](https://www.gnu.org/software/make/)
+
+Certifique-se de que as versões do Docker e Docker Compose são compatíveis com os comandos que você pretende usar:
+
+- `docker-compose up -d`: Funciona com versões mais antigas do Docker Compose (antes da versão 2.0).
+- `docker compose up -d`: Funciona com versões mais recentes do Docker Compose (a partir da versão 2.0).
+- `make up`: Funciona se você tiver um arquivo `Makefile` configurado com um alvo `up`.
+
+O frontend ficará disponível em [http://localhost:8000](http://localhost:8000), o backend em [http://localhost:4000](http://localhost:4000) e a documentação do Swagger em [http://localhost:4000/v1/docs](http://localhost:4000/v1/docs).
 
 ## 📚 Documentação Detalhada
 

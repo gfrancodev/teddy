@@ -37,36 +37,18 @@ services:
     networks:
       - teddy-network
 
-  db-seed:
-    container_name: teddy_db_seed
-    build:
-      context: .
-      dockerfile: ./backend/Dockerfile
-    command: >
-      sh -c "cd /app/backend && 
-             npm install && 
-             npx ts-node database/seed.ts"
-    env_file:
-      - ./backend/.env
-      - ./backend/.env.db
-    depends_on:
-      db-migration:
-        condition: service_completed_successfully
-    networks:
-      - teddy-network
-
   backend:
     container_name: teddy_backend
     build:
-      context: .
-      dockerfile: ./backend/Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile
     env_file:
       - ./backend/.env
     ports:
       - "4000:3000"
     depends_on:
-      db-seed:
-        condition: service_completed_successfully
+      db:
+        condition: service_healthy
     networks:
       - teddy-network
 
