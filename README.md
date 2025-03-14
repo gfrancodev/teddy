@@ -1,6 +1,8 @@
-# 🧸 Teddy - Sistema de Gerenciamento de Clientes
+<div align="center">
+    <img src="https://teddydigital.io/wp-content/uploads/2023/10/logo-branco-1536x745.png" alt="Teddy Logo" width="400">
+</div>
 
-![Teddy Logo](https://teddydigital.io/wp-content/uploads/2023/10/logo-branco-1536x745.png)
+# Teddy - Sistema de Gerenciamento de Clientes
 
 Sistema completo de gerenciamento de clientes desenvolvido com React (frontend) e NestJS (backend), seguindo as melhores práticas de arquitetura e desenvolvimento.
 
