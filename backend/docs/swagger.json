@@ -1,0 +1,615 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/v1/auth/login": {
+      "post": {
+        "operationId": "AuthV1Controller_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginAuthDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User authenticated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+                    "expires_in": 3600,
+                    "user": {
+                      "fullname": "John Doe",
+                      "username": "johndoe",
+                      "email": "john@example.com"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "error": {
+                      "id": "4920d8a1-f099-4cd8-b707-11f197f2b76c",
+                      "status": 401,
+                      "name": "Unauthorized",
+                      "details": {
+                        "timestamp": "2025-03-12T23:40:21.864Z",
+                        "path": "/v1/auth/login",
+                        "code": 6000,
+                        "description": "Invalid credentials"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "User not verified",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "error": {
+                      "id": "4920d8a1-f099-4cd8-b707-11f197f2b76c",
+                      "status": 403,
+                      "name": "Forbidden",
+                      "details": {
+                        "timestamp": "2025-03-12T23:40:21.864Z",
+                        "path": "/v1/auth/login",
+                        "code": 1004,
+                        "description": "User not verified"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Authenticate user",
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/v1/auth/register": {
+      "post": {
+        "operationId": "AuthV1Controller_register",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterAuthDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered successfully"
+          },
+          "409": {
+            "description": "Email or username already exists",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "error": {
+                      "id": "4920d8a1-f099-4cd8-b707-11f197f2b76c",
+                      "status": 409,
+                      "name": "Conflict",
+                      "details": {
+                        "timestamp": "2025-03-12T23:40:21.864Z",
+                        "path": "/v1/auth/register",
+                        "code": 1000,
+                        "description": "Email is already in use"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Registration failed due to an internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "error": {
+                      "id": "4920d8a1-f099-4cd8-b707-11f197f2b76c",
+                      "status": 500,
+                      "name": "Internal Server Error",
+                      "details": {
+                        "timestamp": "2025-03-12T23:40:21.864Z",
+                        "path": "/v1/auth/register",
+                        "code": 6001,
+                        "description": "Registration failed"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Register new user",
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/v1/auth/me": {
+      "get": {
+        "operationId": "AuthV1Controller_me",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "User profile retrieved successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": "123e4567-e89b-12d3-a456-426614174000",
+                  "fullname": "João Silva",
+                  "email": "joao.silva@example.com",
+                  "username": "joao_silva",
+                  "last_access": 1696171200,
+                  "status": "active",
+                  "role": "user",
+                  "verified": true,
+                  "created_at": "2023-09-01T13:20:00.000Z",
+                  "updated_at": "2023-09-01T13:20:00.000Z",
+                  "deleted_at": null
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "success": false,
+                    "error": {
+                      "id": "4920d8a1-f099-4cd8-b707-11f197f2b76c",
+                      "status": 401,
+                      "name": "Unauthorized",
+                      "details": {
+                        "timestamp": "2025-03-12T23:40:21.864Z",
+                        "path": "/v1/auth/me",
+                        "code": 6003,
+                        "description": "Unauthorized"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Get authenticated user profile",
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/v1/client": {
+      "get": {
+        "operationId": "ClientV1Controller_getAll",
+        "parameters": [
+          {
+            "name": "current_page",
+            "required": false,
+            "in": "query",
+            "description": "Página atual",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Limite de itens por página",
+            "schema": {
+              "example": 16,
+              "type": "number"
+            }
+          },
+          {
+            "name": "filter",
+            "required": false,
+            "in": "query",
+            "description": "Filtro de busca",
+            "schema": {
+              "example": "John Doe",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Clients retrieved successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "current_page": 1,
+                  "total_pages": 3,
+                  "total_items": 45,
+                  "limit": 16,
+                  "in_page": 16,
+                  "has_next_page": true,
+                  "has_previous_page": false,
+                  "data": [
+                    {
+                      "id": 1,
+                      "user_id": "uuid",
+                      "name": "Empresa XYZ",
+                      "salary": 5000,
+                      "company_value": 1000000,
+                      "status": "active",
+                      "created_at": "+056155-01-02T16:00:00.000Z",
+                      "updated_at": null,
+                      "deleted_at": null
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List all clients",
+        "tags": [
+          "Clients"
+        ]
+      },
+      "post": {
+        "operationId": "ClientV1Controller_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateClientDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Client created successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "user_id": "uuid",
+                  "name": "Empresa XYZ",
+                  "salary": 5000,
+                  "company_value": 1000000,
+                  "status": "active",
+                  "created_at": "+056155-01-02T16:00:00.000Z",
+                  "updated_at": null,
+                  "deleted_at": null
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "409": {
+            "description": "Client name already exists"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new client",
+        "tags": [
+          "Clients"
+        ]
+      }
+    },
+    "/v1/client/{id}": {
+      "put": {
+        "operationId": "ClientV1Controller_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Client ID",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateClientDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Client updated successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "user_id": "uuid",
+                  "name": "Empresa XYZ Atualizada",
+                  "salary": 6000,
+                  "company_value": 1200000,
+                  "status": "active",
+                  "created_at": "+056155-01-02T16:00:00.000Z",
+                  "updated_at": "+056157-09-28T15:43:20.000Z",
+                  "deleted_at": null
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "404": {
+            "description": "Client not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update a client",
+        "tags": [
+          "Clients"
+        ]
+      },
+      "delete": {
+        "operationId": "ClientV1Controller_delete",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Client ID",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Client deleted successfully",
+            "content": {
+              "application/json": {
+                "example": null
+              }
+            }
+          },
+          "404": {
+            "description": "Client not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete a client",
+        "tags": [
+          "Clients"
+        ]
+      },
+      "get": {
+        "operationId": "ClientV1Controller_getById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Client ID",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Client retrieved successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "user_id": "uuid",
+                  "name": "Empresa XYZ",
+                  "salary": 5000,
+                  "company_value": 1000000,
+                  "status": "active",
+                  "created_at": "+056155-01-02T16:00:00.000Z",
+                  "updated_at": null,
+                  "deleted_at": null
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Client not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "code": 3005,
+                    "identifier": "CLIENT_NOT_FOUND",
+                    "client_message": "Client not found",
+                    "message": "The requested client does not exist in the system"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get client by ID",
+        "tags": [
+          "Clients"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "TEDDY BACKEND",
+    "description": "",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "LoginAuthDTO": {
+        "type": "object",
+        "properties": {
+          "identifier": {
+            "type": "string",
+            "description": "User identifier",
+            "example": "usuario123"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password",
+            "example": "senha123"
+          }
+        },
+        "required": [
+          "identifier",
+          "password"
+        ]
+      },
+      "RegisterAuthDTO": {
+        "type": "object",
+        "properties": {
+          "fullname": {
+            "type": "string",
+            "description": "Full name of the user",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "example": "john.doe@example.com"
+          },
+          "username": {
+            "type": "string",
+            "description": "Username",
+            "example": "john_doe"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password",
+            "example": "password123"
+          }
+        },
+        "required": [
+          "fullname",
+          "email",
+          "username",
+          "password"
+        ]
+      },
+      "CreateClientDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Client name",
+            "example": "Company XYZ"
+          },
+          "salary": {
+            "type": "number",
+            "description": "Client salary",
+            "example": 5000
+          },
+          "company_value": {
+            "type": "number",
+            "description": "Client company value",
+            "example": 1000000
+          }
+        },
+        "required": [
+          "name",
+          "salary",
+          "company_value"
+        ]
+      },
+      "UpdateClientDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Client name",
+            "example": "Company XYZ"
+          },
+          "salary": {
+            "type": "number",
+            "description": "Client salary",
+            "example": 5000
+          },
+          "company_value": {
+            "type": "number",
+            "description": "Client company value",
+            "example": 1000000
+          }
+        }
+      }
+    }
+  }
+}

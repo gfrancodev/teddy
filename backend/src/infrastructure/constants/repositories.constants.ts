@@ -1,0 +1,5 @@
+export const USER_REPOSITORY = Symbol('USER');
+export const USER_REPOSITORY_BASE = Symbol('USER_REPOSITORY_BASE');
+
+export const CLIENT_REPOSITORY = Symbol('CLIENT');
+export const CLIENT_REPOSITORY_BASE = Symbol('CLIENT_REPOSITORY_BASE');
