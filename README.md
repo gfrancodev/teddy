@@ -1,6 +1,9 @@
 # 🧸 Teddy - Sistema de Gerenciamento de Clientes
 
+![Teddy Logo](https://teddydigital.io/wp-content/uploads/2023/10/logo-branco-1536x745.png)
+
 Sistema completo de gerenciamento de clientes desenvolvido com React (frontend) e NestJS (backend), seguindo as melhores práticas de arquitetura e desenvolvimento.
+
 ### Requisitos para Execução
 
 Para executar toda a aplicação, você precisa ter os seguintes softwares instalados na sua máquina:
