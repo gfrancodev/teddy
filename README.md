@@ -22,6 +22,12 @@ Para executar toda a aplicação, você precisa ter os seguintes softwares insta
 
 Certifique-se de que as versões do Docker e Docker Compose são compatíveis com os comandos que você pretende usar:
 
+Antes de executar, certifique-se de criar os arquivos `.env` e `.env.db` na pasta `/backend`. Basta copiar os arquivos de exemplo e renomeá-los:
+```bash
+cp backend/.env.example backend/.env
+cp backend/.env.db.example backend/.env.db
+```
+
 - `docker-compose up -d`: Funciona com versões mais antigas do Docker Compose (antes da versão 2.0).
 - `docker compose up -d`: Funciona com versões mais recentes do Docker Compose (a partir da versão 2.0).
 - `make up`: Funciona se você tiver um arquivo `Makefile` configurado com um alvo `up`.
